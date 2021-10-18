@@ -25,17 +25,4 @@ export class AppController {
     return `prduct ${id}`;
   }
 
-  @Get('/categories/:id/products/:productId')
-  getCategory(@Param('id') id: string, @Param('productId') productId: string) {
-    return `prduct ${productId} and category ${id}`;
-  }
-
-  @Get('/products')
-  getProducts(
-    @Query('limit') limit = 100,
-    @Query('offset') offset = 20,
-    @Query('brand') brand: string,
-  ) {
-    return `prducts: limit => ${limit} offset => ${offset} brand => ${brand}`;
-  }
 }
