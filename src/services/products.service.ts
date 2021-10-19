@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
+import { CreateProductDto, UpdateProductDto } from '../dtos/products.dtos';
+
 @Injectable()
 export class ProductsService {
   private counter = 1;
@@ -23,7 +25,7 @@ export class ProductsService {
     return product;
   }
 
-  create(body) {
+  create(body: CreateProductDto) {
     const payload = {
       id: this.counter,
       ...body,
@@ -36,7 +38,7 @@ export class ProductsService {
     };
   }
 
-  update(id: number, changes: any) {
+  update(id: number, changes: UpdateProductDto) {
     const product = this.findOne(id);
     if (product) {
       const index = this.products.findIndex((item) => item.id == id);
