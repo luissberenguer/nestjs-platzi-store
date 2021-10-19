@@ -9,9 +9,11 @@ import {
   Delete,
   HttpStatus,
   HttpCode,
+  NotFoundException,
+  ParseIntPipe,
 } from '@nestjs/common';
 
-import { ProductsService } from '../services/products.service'
+import { ProductsService } from '../services/products.service';
 
 @Controller('products')
 export class ProductsController {
@@ -34,11 +36,12 @@ export class ProductsController {
 
   @Get(':productId')
   @HttpCode(HttpStatus.ACCEPTED)
-  getOne(@Param('productId') productId: number) {
-    // return {
-    //   message: `Este es el producto ${productId}`,
-    // };
-    return this.productService.findOne(+productId);
+  getOne(@Param('productId', ParseIntPipe) productId: number) {
+    const product = this.productService.findOne(productId);
+    if (!product) {
+      throw new NotFoundException(`Product #${productId} was not found`);
+    }
+    return product;
   }
 
   @Post()
@@ -46,12 +49,12 @@ export class ProductsController {
     return this.productService.create(payload);
   }
   @Put(':id')
-  update(@Param('id') id: string, @Body() payload: any) {
-    return this.productService.update(+id, payload);
+  update(@Param('id', ParseIntPipe) id: number, @Body() payload: any) {
+    return this.productService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
+  delete(@Param('id', ParseIntPipe) id: number) {
     return this.productService.delete(id);
   }
 }
