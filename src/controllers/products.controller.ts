@@ -10,8 +10,10 @@ import {
   HttpStatus,
   HttpCode,
   NotFoundException,
-  ParseIntPipe,
+  // ParseIntPipe,
 } from '@nestjs/common';
+
+import { ParseIntPipe } from '../common/parse-int.pipe'
 
 import { ProductsService } from '../services/products.service';
 
