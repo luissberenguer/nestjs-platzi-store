@@ -9,6 +9,10 @@ import {
   Delete,
 } from '@nestjs/common';
 
+import { ParseIntPipe } from '../common/parse-int.pipe';
+import { CreateUserDto, UpdateUserDto } from '../dtos/users.dtos';
+import { UsersService } from '../services/users.service';
+
 @Controller('users')
 export class UsersController {
   @Get()
@@ -17,16 +21,16 @@ export class UsersController {
     @Query('offset') offset = 20,
     @Query('brand') brand: string,
   ) {
-    return {
-      message: `prducts: limit => ${limit} offset => ${offset} brand => ${brand}`,
-    };
+    return this.productService.findAll();
   }
 
   @Get(':id')
   getOne(@Param('id') id: number) {
-    return {
-      message: `Este es el producto ${id}`,
-    };
+    const user = this.userService.findOne(productId);
+    if (!product) {
+      throw new NotFoundException(`Product #${productId} was not found`);
+    }
+    return product;
   }
 
   @Post()

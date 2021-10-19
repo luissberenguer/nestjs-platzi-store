@@ -25,16 +25,16 @@ export class ProductsService {
     return product;
   }
 
-  create(body: CreateProductDto) {
-    const payload = {
+  create(payload: CreateProductDto) {
+    const newProduct = {
       id: this.counter,
-      ...body,
+      ...payload,
     };
     this.counter++;
-    this.products.push(payload);
+    this.products.push(newProduct);
     return {
       message: 'Product created',
-      payload,
+      newProduct,
     };
   }
 
