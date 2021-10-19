@@ -20,9 +20,4 @@ export class AppController {
     return 'soy una nueva ruta';
   }
 
-  @Get('/products/:id')
-  getParams(@Param('id') id: any) {
-    return `prduct ${id}`;
-  }
-
 }
