@@ -54,7 +54,7 @@ export class ProductsService {
   delete(id) {
     const index = this.products.findIndex((item) => item.id == id);
     this.products.splice(index, 1);
-    return { message: 'Product deleted' };
+    return { message: true };
   }
 
 }

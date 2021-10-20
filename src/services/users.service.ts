@@ -49,6 +49,6 @@ export class UsersService {
   delete(id: number) {
     const index = this.users.findIndex((item) => item.id == id);
     this.users.splice(index, 1);
-    return 'User deleted';
+    return { message: true };
   }
 }

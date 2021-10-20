@@ -7,59 +7,48 @@ import {
   Body,
   Put,
   Delete,
+  NotFoundException,
 } from '@nestjs/common';
+
+import { ParseIntPipe } from '../common/parse-int.pipe';
+import { CreateCategoryDto, UpdateCategoryDto } from '../dtos/categories.dtos';
+import { CategoriesService } from '../services/categories.service';
 
 @Controller('categories')
 export class CategoriesController {
+  constructor(private categoryService: CategoriesService){}
   @Get()
   getAll(
     @Query('limit') limit = 100,
     @Query('offset') offset = 20,
     @Query('brand') brand: string,
   ) {
-    return {
-      message: `prducts: limit => ${limit} offset => ${offset} brand => ${brand}`,
-    };
+    return this.categoryService.findAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') id: number) {
-    return {
-      message: `Este es el producto ${id}`,
-    };
-  }
-
-  @Get(':id/products/:productId')
-  getCategoryProduct(
-    @Param('id') id: string,
-    @Param('productId') productId: string,
-  ) {
-    return {
-      message: `prduct ${productId} and category ${id}`,
-    };
+  getOne(@Param('id', ParseIntPipe) id: number) {
+    const category = this.categoryService.findOne(id);
+    if (!category) {
+      throw new NotFoundException(`category #${id} was not found`);
+    }
+    return category;
   }
 
   @Post()
-  cretate(@Body() payload: any) {
-    return {
-      message: 'Se ha creado un usuario',
-      payload,
-    };
+  cretate(@Body() payload: CreateCategoryDto) {
+    return this.categoryService.create(payload);
   }
-
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      id,
-      payload,
-    };
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateCategoryDto,
+  ) {
+    return this.categoryService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      id,
-      message: `Deleted`,
-    };
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.categoryService.delete(id);
   }
 }

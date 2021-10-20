@@ -7,7 +7,12 @@ export class CreateCustomerDto {
   readonly name: string;
 
   @IsNotEmpty()
+  @IsString()
   readonly lastName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly password: string;
 
   @IsNotEmpty()
   @IsPhoneNumber()

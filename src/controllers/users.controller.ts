@@ -7,6 +7,7 @@ import {
   Body,
   Put,
   Delete,
+  NotFoundException,
 } from '@nestjs/common';
 
 import { ParseIntPipe } from '../common/parse-int.pipe';
@@ -15,45 +16,39 @@ import { UsersService } from '../services/users.service';
 
 @Controller('users')
 export class UsersController {
+  constructor(private userService: UsersService){}
   @Get()
   getAll(
     @Query('limit') limit = 100,
     @Query('offset') offset = 20,
     @Query('brand') brand: string,
   ) {
-    return this.productService.findAll();
+    return this.userService.findAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') id: number) {
-    const user = this.userService.findOne(productId);
-    if (!product) {
-      throw new NotFoundException(`Product #${productId} was not found`);
+  getOne(@Param('id', ParseIntPipe) id: number) {
+    const user = this.userService.findOne(id);
+    if (!user) {
+      throw new NotFoundException(`User #${id} was not found`);
     }
-    return product;
+    return user;
   }
 
   @Post()
-  cretate(@Body() payload: any) {
-    return {
-      message: 'Se ha creado un usuario',
-      payload,
-    };
+  cretate(@Body() payload: CreateUserDto) {
+    return this.userService.create(payload);
   }
-
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      id,
-      payload,
-    };
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateUserDto,
+  ) {
+    return this.userService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      id,
-      message: `Deleted`,
-    };
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.delete(id);
   }
 }
