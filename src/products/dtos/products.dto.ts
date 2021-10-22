@@ -5,7 +5,8 @@ import {
   IsUrl,
   IsNotEmpty,
 } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
+
+import { PartialType, ApiProperty } from '@nestjs/swagger';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -19,6 +20,7 @@ export class CreateProductDto {
   @IsNotEmpty()
   @IsPositive()
   @IsNumber()
+  @ApiProperty({ description: 'Product prices, must be positive' })
   readonly price: number;
 
   @IsNotEmpty()

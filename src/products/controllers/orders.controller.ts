@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { ParseIntPipe } from '../../common/parse-int.pipe';
-import { CreateOrderDto, UpdateOrderDto } from '../dtos/orders.dtos';
+import { CreateOrderDto, UpdateOrderDto } from '../dtos/orders.dto';
 import { OrdersService } from '../services/orders.service';
 
 @Controller('orders')

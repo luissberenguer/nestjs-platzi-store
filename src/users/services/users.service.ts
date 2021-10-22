@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { Order } from '../entities/order.entity';
 
-import { CreateUserDto, UpdateUserDto } from '../dtos/users.dtos';
+import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 import { ProductsService } from '../../products/services/products.service'
 
 @Injectable()

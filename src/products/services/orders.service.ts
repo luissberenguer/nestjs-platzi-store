@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Order } from '../entities/order.entity';
-import { CreateOrderDto, UpdateOrderDto } from '../dtos/orders.dtos';
+import { CreateOrderDto, UpdateOrderDto } from '../dtos/orders.dto';
 
 @Injectable()
 export class OrdersService {
