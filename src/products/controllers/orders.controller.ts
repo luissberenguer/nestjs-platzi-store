@@ -13,7 +13,9 @@ import {
 import { ParseIntPipe } from '../../common/parse-int.pipe';
 import { CreateOrderDto, UpdateOrderDto } from '../dtos/orders.dto';
 import { OrdersService } from '../services/orders.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Orders')
 @Controller('orders')
 export class OrdersController {
   constructor(private orderService: OrdersService) {}
