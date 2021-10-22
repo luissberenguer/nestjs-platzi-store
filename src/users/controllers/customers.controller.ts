@@ -10,7 +10,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { ParseIntPipe } from '../common/parse-int.pipe';
+import { ParseIntPipe } from '../../common/parse-int.pipe';
 import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customers.dtos';
 import { CustomersService } from '../services/customers.service';
 
