@@ -19,5 +19,4 @@ export class AppController {
   nueva() {
     return 'soy una nueva ruta';
   }
-
 }

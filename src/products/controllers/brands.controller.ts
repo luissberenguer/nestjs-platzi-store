@@ -16,7 +16,7 @@ import { BrandsService } from '../services/brands.service';
 
 @Controller('brands')
 export class BrandsController {
-  constructor(private brandService: BrandsService){}
+  constructor(private brandService: BrandsService) {}
   @Get()
   getAll(
     @Query('limit') limit = 100,

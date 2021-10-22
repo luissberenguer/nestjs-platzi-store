@@ -23,7 +23,7 @@ export class BrandsService {
     };
     this.counter++;
     this.brands.push(newBrand);
-    return  newBrand;
+    return newBrand;
   }
 
   update(id: number, changes: UpdateBrandDto) {

@@ -23,7 +23,7 @@ export class CustomersService {
     };
     this.counter++;
     this.customers.push(newCustomer);
-    return  newCustomer;
+    return newCustomer;
   }
 
   update(id: number, changes: UpdateCustomerDto) {

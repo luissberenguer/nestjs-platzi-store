@@ -23,7 +23,7 @@ export class CategoriesService {
     };
     this.counter++;
     this.categories.push(newCategory);
-    return  newCategory;
+    return newCategory;
   }
 
   update(id: number, changes: UpdateCategoryDto) {

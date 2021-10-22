@@ -16,7 +16,7 @@ import { CustomersService } from '../services/customers.service';
 
 @Controller('customers')
 export class CustomersController {
-  constructor(private customerService: CustomersService){}
+  constructor(private customerService: CustomersService) {}
   @Get()
   getAll(
     @Query('limit') limit = 100,

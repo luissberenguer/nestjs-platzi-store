@@ -23,7 +23,7 @@ export class OrdersService {
     };
     this.counter++;
     this.orders.push(newOrder);
-    return  newOrder;
+    return newOrder;
   }
 
   update(id: number, changes: UpdateOrderDto) {

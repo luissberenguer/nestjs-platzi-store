@@ -3,11 +3,11 @@ import { User } from '../entities/user.entity';
 import { Order } from '../entities/order.entity';
 
 import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
-import { ProductsService } from '../../products/services/products.service'
+import { ProductsService } from '../../products/services/products.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private productsService: ProductsService){}
+  constructor(private productsService: ProductsService) {}
   private counter = 1;
   private users: User[] = [
     {
@@ -27,12 +27,11 @@ export class UsersService {
     return user;
   }
 
-
   create(payload: CreateUserDto) {
     const newUser = {
       id: this.counter,
       ...payload,
-    }
+    };
     this.counter++;
     this.users.push(newUser);
     return newUser;
@@ -45,7 +44,7 @@ export class UsersService {
       this.users[index] = {
         ...user,
         ...changes,
-      }
+      };
       return this.users[index];
     }
     return null;
@@ -63,6 +62,6 @@ export class UsersService {
       date: new Date(),
       user,
       products: this.productsService.findAll(),
-    }
+    };
   }
 }

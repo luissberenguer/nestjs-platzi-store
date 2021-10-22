@@ -16,7 +16,7 @@ import { CategoriesService } from '../services/categories.service';
 
 @Controller('categories')
 export class CategoriesController {
-  constructor(private categoryService: CategoriesService){}
+  constructor(private categoryService: CategoriesService) {}
   @Get()
   getAll(
     @Query('limit') limit = 100,
