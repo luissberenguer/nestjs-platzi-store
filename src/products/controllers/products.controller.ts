@@ -9,7 +9,6 @@ import {
   Delete,
   HttpStatus,
   HttpCode,
-  NotFoundException,
   // ParseIntPipe,
 } from '@nestjs/common';
 
@@ -43,9 +42,6 @@ export class ProductsController {
   @HttpCode(HttpStatus.ACCEPTED)
   getOne(@Param('productId', ParseIntPipe) productId: number) {
     const product = this.productService.findOne(productId);
-    if (!product) {
-      throw new NotFoundException(`Product #${productId} was not found`);
-    }
     return product;
   }
 
