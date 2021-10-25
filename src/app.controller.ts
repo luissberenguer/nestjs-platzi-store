@@ -19,4 +19,9 @@ export class AppController {
   nueva() {
     return 'soy una nueva ruta';
   }
+
+  @Get('tasks')
+  tasks() {
+    return this.appService.getTasks();
+  }
 }

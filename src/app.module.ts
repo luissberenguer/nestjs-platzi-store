@@ -11,6 +11,8 @@ import { DatabaseModule } from './database/database.module';
 import { enviroments } from './enviroments';
 import config from './config';
 
+
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,8 +21,9 @@ import config from './config';
       isGlobal: true,
       validationSchema: Joi.object({
         API_KEY: Joi.number().required(),
-        DATABASE_NAME: Joi.string().required(),
-        DATABASE_PORT: Joi.number().required(),
+        POSTGRES_USER: Joi.string(),
+        POSTGRES_PASSWORD: Joi.string(),
+        POSTGRES_PORT: Joi.number(),
       }),
     }),
     HttpModule,

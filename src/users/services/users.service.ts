@@ -1,13 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { Order } from '../entities/order.entity';
+import { Client } from 'pg';
 
 import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 import { ProductsService } from '../../products/services/products.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    @Inject('PG') private clientPg: Client,
+  ) {}
   private counter = 1;
   private users: User[] = [
     {
@@ -63,5 +67,16 @@ export class UsersService {
       user,
       products: this.productsService.findAll(),
     };
+  }
+
+  getTasks() {
+    return new Promise((resolve, reject) => {
+      this.clientPg.query('SELECT * FROM tasks', (err, res) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res.rows);
+      });
+    });
   }
 }

@@ -15,10 +15,11 @@ import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 import { UsersService } from '../services/users.service';
 import { ApiTags } from '@nestjs/swagger';
 
+
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService, ) {}
   @Get()
   getAll(
     @Query('limit') limit = 100,
@@ -26,6 +27,12 @@ export class UsersController {
     @Query('brand') brand: string,
   ) {
     return this.usersService.findAll();
+  }
+
+  @Get('tasks')
+  getTasks() {
+    const tasks = this.usersService.getTasks();
+    return tasks;
   }
 
   @Get(':id')
@@ -58,4 +65,5 @@ export class UsersController {
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.delete(id);
   }
+
 }
