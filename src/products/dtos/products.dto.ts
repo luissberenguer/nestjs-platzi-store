@@ -11,10 +11,12 @@ import { PartialType, ApiProperty } from '@nestjs/swagger';
 export class CreateProductDto {
   @IsNotEmpty()
   @IsString()
+  @ApiProperty()
   readonly name: string;
 
   @IsNotEmpty()
   @IsString()
+  @ApiProperty()
   readonly description: string;
 
   @IsNotEmpty()
@@ -26,10 +28,12 @@ export class CreateProductDto {
   @IsNotEmpty()
   @IsPositive()
   @IsNumber()
+  @ApiProperty()
   readonly stock: number;
 
   @IsNotEmpty()
   @IsUrl()
+  @ApiProperty()
   readonly image: string;
 }
 
