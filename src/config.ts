@@ -20,6 +20,17 @@ export default registerAs('consfig', () => {
       password: process.env.MYSQL_ROOT_PASSWORD,
       port: parseInt(process.env.MYSQL_PORT),
     },
+    typeorm: {
+      type: process.env.TYPEORM_CONNECTION,
+      host: process.env.TYPEORM_HOST,
+      dbName: process.env.TYPEORM_DATABASE,
+      user: process.env.TYPEORM_USERNAME,
+      password: process.env.TYPEORM_PASSWORD,
+      port: parseInt(process.env.TYPEORM_PORT),
+      isSync: process.env.TYPEORM_SYNCHRONIZE,
+      isLoging: process.env.TYPEORM_LOGGING,
+      entities: process.env.TYPEORM_ENTITIES,
+    },
     apiKey: process.env.API_KEY,
   };
 });

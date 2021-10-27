@@ -14,6 +14,7 @@ export class UsersService {
     private productsService: ProductsService,
     @Inject('PG') private clientPg: Client,
     @InjectRepository(User) private userRepo: Repository<User>,
+    @InjectRepository(Order) private orderRepo: Repository<Order>,
   ) {}
 
   async findAll() {
