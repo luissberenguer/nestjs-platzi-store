@@ -1,56 +1,46 @@
 import {
   Controller,
-  Query,
   Get,
-  Post,
   Param,
+  Post,
   Body,
   Put,
   Delete,
-  NotFoundException,
+  ParseIntPipe,
 } from '@nestjs/common';
 
-import { ParseIntPipe } from '../../common/parse-int.pipe';
-import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customers.dto';
 import { CustomersService } from '../services/customers.service';
-import { ApiTags } from '@nestjs/swagger';
+import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customer.dto';
 
-@ApiTags('Customers')
 @Controller('customers')
-export class CustomersController {
-  constructor(private customerService: CustomersService) {}
+export class CustomerController {
+  constructor(private customersService: CustomersService) {}
+
   @Get()
-  getAll(
-    @Query('limit') limit = 100,
-    @Query('offset') offset = 20,
-    @Query('brand') brand: string,
-  ) {
-    return this.customerService.findAll();
+  findAll() {
+    return this.customersService.findAll();
   }
 
   @Get(':id')
-  getOne(@Param('id', ParseIntPipe) id: number) {
-    const customer = this.customerService.findOne(id);
-    if (!customer) {
-      throw new NotFoundException(`Customer #${id} was not found`);
-    }
-    return customer;
+  get(@Param('id', ParseIntPipe) id: number) {
+    return this.customersService.findOne(id);
   }
 
   @Post()
-  cretate(@Body() payload: CreateCustomerDto) {
-    return this.customerService.create(payload);
+  create(@Body() payload: CreateCustomerDto) {
+    return this.customersService.create(payload);
   }
+
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: UpdateCustomerDto,
   ) {
-    return this.customerService.update(id, payload);
+    return this.customersService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    return this.customerService.delete(id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.customersService.remove(+id);
   }
 }

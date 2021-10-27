@@ -16,13 +16,10 @@ export class User {
   id: number;
 
   @Column({ type: 'varchar', length: 255 })
-  username: string;
+  email: string;
 
   @Column({ type: 'varchar', length: 255 })
   password: string; // encrypt
-
-  @Column({ type: 'varchar', length: 255 })
-  email: string;
 
   @Column({ type: 'varchar', length: 100 })
   role: string;
