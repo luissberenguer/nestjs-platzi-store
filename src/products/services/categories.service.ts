@@ -15,7 +15,9 @@ export class CategoriesService {
   }
 
   async findOne(id: number) {
-    const category = await this.categoryRepo.findOne(id);
+    const category = await this.categoryRepo.findOne(id, {
+      relations: ['products'],
+    });
     if (!category) {
       throw new NotFoundException(`Category #${id} was not found`);
     }
@@ -23,7 +25,7 @@ export class CategoriesService {
   }
 
   async create(payload: CreateCategoryDto) {
-    const newCategory =  this.categoryRepo.create(payload);
+    const newCategory = this.categoryRepo.create(payload);
     return this.categoryRepo.save(newCategory);
   }
 
