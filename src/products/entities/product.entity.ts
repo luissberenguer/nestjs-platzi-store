@@ -4,7 +4,13 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
+
+import { Brand } from './brand.entity';
+import { Category } from './category.entity';
 
 @Entity()
 export class Product {
@@ -37,4 +43,11 @@ export class Product {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updateAt: Date;
+
+  @ManyToOne(() => Brand, (brand) => brand.products)
+  brand: Brand;
+
+  @JoinTable()
+  @ManyToMany(() => Category, (category) => category.products)
+  categories: Category[];
 }
