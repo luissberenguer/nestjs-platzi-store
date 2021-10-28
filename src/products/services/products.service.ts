@@ -59,7 +59,42 @@ export class ProductsService {
       const brand = await this.brandsService.findOne(changes.brandId);
       product.brand = brand;
     }
+    if (changes.categoriesIds) {
+      const categories = await this.categoryRepo.findByIds(
+        changes.categoriesIds,
+      );
+      product.categories = categories;
+    }
     this.productRepo.merge(product, changes);
+    return this.productRepo.save(product);
+  }
+
+  async removeCategoryByProduct(productId: number, categoryId: number) {
+    const product = await this.productRepo.findOne(productId, {
+      relations: ['categories'],
+    });
+    product.categories = product.categories.filter(
+      (item) => item.id !== categoryId,
+    );
+    return this.productRepo.save(product);
+  }
+
+  async addCategoryToProducts(productId: number, categoryId: number) {
+    const product = await this.productRepo.findOne(productId, {
+      relations: ['categories'],
+    });
+    if (!product) {
+      throw new NotFoundException(`Product #${productId} not found`);
+    }
+    const category = await this.categoryRepo.findOne(categoryId);
+    if (!category) {
+      throw new NotFoundException(`Category #${categoryId} not found`);
+    }
+    if (!product.categories.find((item) => item.id == categoryId)) {
+      product.categories.push(category);
+    } else {
+      throw new NotFoundException(`Category #${categoryId} is already present`);
+    }
     return this.productRepo.save(product);
   }
 
