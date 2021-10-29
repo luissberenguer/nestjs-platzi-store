@@ -10,6 +10,8 @@ import {
   OneToMany,
 } from 'typeorm';
 
+import { Exclude, Expose } from 'class-transformer';
+
 @Entity()
 export class Order {
   @PrimaryGeneratedColumn()
@@ -30,7 +32,20 @@ export class Order {
   @ManyToOne(() => Customer, (customer) => customer.orders)
   customer: Customer;
 
+  @Exclude()
   @OneToMany(() => OrderItem, (item) => item.order)
-  items: OrderItem[]
+  items: OrderItem[];
 
+  @Expose()
+  get products() {
+    if (this.products) {
+      return this.items
+        .filter((item) => !!item)
+        .map((item) => ({
+          ...item.product,
+          quantity = item.quantity,
+        }));
+    }
+    return [];
+  }
 }
