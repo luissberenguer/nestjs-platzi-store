@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 import { ProductsService } from '../../products/services/products.service';
 import { CustomersService } from './customers.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -33,8 +34,16 @@ export class UsersService {
     return user;
   }
 
+  findByEmail(email: string) {
+    const user = this.userRepo.findOne({
+      where: email,
+    })
+  }
+
   async create(payload: CreateUserDto) {
     const newUser = this.userRepo.create(payload);
+    const hashedPassword = await bcrypt.hash(newUser.password, 10);
+    newUser.password = hashedPassword;
     if (payload.customerId) {
       const customer = await this.customersService.findOne(payload.customerId);
       newUser.customer = customer;
