@@ -8,10 +8,15 @@ import {
   Put,
   Delete,
   NotFoundException,
+  ParseIntPipe,
 } from '@nestjs/common';
 
-import { ParseIntPipe } from '../../common/parse-int.pipe';
-import { CreateCategoryDto, UpdateCategoryDto } from '../dtos/categories.dto';
+// import { ParseIntPipe } from '../../common/parse-int.pipe';
+import {
+  CreateCategoryDto,
+  UpdateCategoryDto,
+  FilterCategoryDto,
+} from '../dtos/categories.dto';
 import { CategoriesService } from '../services/categories.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -20,12 +25,8 @@ import { ApiTags } from '@nestjs/swagger';
 export class CategoriesController {
   constructor(private categoryService: CategoriesService) {}
   @Get()
-  getAll(
-    @Query('limit') limit = 100,
-    @Query('offset') offset = 20,
-    @Query('brand') brand: string,
-  ) {
-    return this.categoryService.findAll();
+  getAll(@Query() params: FilterCategoryDto) {
+    return this.categoryService.findAll(params);
   }
 
   @Get(':id')
