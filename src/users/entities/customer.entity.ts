@@ -5,7 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
+import { Order } from './order.entity';
 
 import { User } from './user.entity';
 
@@ -37,4 +39,7 @@ export class Customer {
 
   @OneToOne(() => User, (user) => user.customer, { nullable: true })
   user: Customer;
+
+  @OneToMany(() => Order, (order) => order.customer)
+  orders: Order[];
 }

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { Category } from '../entities/category.entity';
 import { Brand } from '../entities/brand.entity';
@@ -93,7 +97,9 @@ export class ProductsService {
     if (!product.categories.find((item) => item.id == categoryId)) {
       product.categories.push(category);
     } else {
-      throw new NotFoundException(`Category #${categoryId} is already present`);
+      throw new ConflictException(
+        `Category #${categoryId} is already present in this product`,
+      );
     }
     return this.productRepo.save(product);
   }

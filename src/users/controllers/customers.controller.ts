@@ -41,6 +41,7 @@ export class CustomersController {
   cretate(@Body() payload: CreateCustomerDto) {
     return this.customerService.create(payload);
   }
+
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
