@@ -43,7 +43,7 @@ export class Order {
         .filter((item) => !!item)
         .map((item) => ({
           ...item.product,
-          quantity = item.quantity,
+          quantity: item.quantity,
           itemId: item.id,
         }));
     }
