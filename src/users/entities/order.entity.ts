@@ -44,8 +44,22 @@ export class Order {
         .map((item) => ({
           ...item.product,
           quantity = item.quantity,
+          itemId: item.id,
         }));
     }
     return [];
+  }
+
+  @Expose()
+  get total() {
+    if (this.items) {
+      return this.items
+        .filter((item) => item !== null)
+        .reduce((total, item) => {
+          const itemTotal = item.product.price * item.quantity;
+          return total + itemTotal;
+        }, 0);
+    }
+    return 0;
   }
 }
