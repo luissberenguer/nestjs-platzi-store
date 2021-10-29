@@ -34,10 +34,11 @@ export class UsersService {
     return user;
   }
 
-  findByEmail(email: string) {
-    const user = this.userRepo.findOne({
-      where: email,
-    })
+  async findByEmail(email: string) {
+    const user = await this.userRepo.findOne({
+      where: { email },
+    });
+    return user;
   }
 
   async create(payload: CreateUserDto) {
