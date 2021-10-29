@@ -6,9 +6,13 @@ import {
 import { Product } from '../entities/product.entity';
 import { Category } from '../entities/category.entity';
 import { Brand } from '../entities/brand.entity';
-import { CreateProductDto, UpdateProductDto } from '../dtos/products.dto';
+import {
+  CreateProductDto,
+  UpdateProductDto,
+  FilterProductsDto,
+} from '../dtos/products.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, FindConditions, Between } from 'typeorm';
 import { BrandsService } from './brands.service';
 
 @Injectable()
@@ -20,7 +24,21 @@ export class ProductsService {
     private brandsService: BrandsService,
   ) {}
 
-  async findAll() {
+  async findAll(params?: FilterProductsDto) {
+    if (params) {
+      const { limit, offset } = params;
+      const { minPrice, maxPrice } = params;
+      const where: FindConditions<Product> = {};
+      if (minPrice && maxPrice) {
+        where.price = Between(minPrice, maxPrice);
+      }
+      return await this.productRepo.find({
+        relations: ['brand'],
+        where,
+        take: limit,
+        skip: offset,
+      })
+    }
     return await this.productRepo.find({
       relations: ['brand'],
     });
