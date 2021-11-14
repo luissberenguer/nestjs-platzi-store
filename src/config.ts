@@ -32,5 +32,6 @@ export default registerAs('config', () => {
       entities: process.env.TYPEORM_ENTITIES,
     },
     apiKey: process.env.API_KEY,
+    jwtSecret: process.env.JWT_SECRET,
   };
 });
