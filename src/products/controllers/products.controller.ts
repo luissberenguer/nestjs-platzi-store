@@ -10,7 +10,7 @@ import {
   HttpStatus,
   HttpCode,
   ParseIntPipe,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 
 // import { ParseIntPipe } from '../../common/parse-int.pipe';
@@ -21,17 +21,22 @@ import {
 } from '../dtos/products.dto';
 import { ProductsService } from '../services/products.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { Public } from '../../auth/decorators/public.decorator';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Products')
 @Controller('products')
 export class ProductsController {
   constructor(private productService: ProductsService) {}
+
+  @Public()
   @Get()
   getProducts(@Query() params: FilterProductsDto) {
     return this.productService.findAll(params);
   }
 
+  @Public()
   @Get('filter')
   getFilteredProducts() {
     return {
@@ -39,7 +44,7 @@ export class ProductsController {
     };
   }
 
-
+  @Public()
   @ApiOperation({ summary: 'List one signle product' })
   @Get(':productId')
   @HttpCode(HttpStatus.ACCEPTED)
@@ -48,13 +53,11 @@ export class ProductsController {
     return product;
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Post()
   cretate(@Body() payload: CreateProductDto) {
     return this.productService.create(payload);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -71,7 +74,6 @@ export class ProductsController {
     return this.productService.addCategoryToProducts(id, categoryId);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.productService.delete(id);
