@@ -17,7 +17,7 @@ import { OrdersController } from './controllers/orders.controller';
 import { ProductsModule } from '../products/products.module';
 import { OrderItemController } from './controllers/order-item.controller';
 import { OrderItemService } from './services/order-item.service';
-import { ProfileController } from './controllers/profile/profile.controller';
+import { ProfileController } from './controllers/profile.controller';
 
 @Module({
   imports: [
